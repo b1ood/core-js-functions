@@ -18,7 +18,7 @@
  *
  */
 function getCurrentFunctionName() {
-  throw new Error('Not implemented');
+  return getCurrentFunctionName.name;
 }
 
 /**
@@ -50,8 +50,12 @@ function getFunctionBody(/* func */) {
  *  ]) => [0, 1, 2]
  *
  */
-function getArgumentsCount(/* funcs */) {
-  throw new Error('Not implemented');
+function getArgumentsCount(funcs) {
+  const arr = [];
+  for (let i = 0; i < funcs.length; i += 1) {
+    arr.push(funcs[i].length);
+  }
+  return arr;
 }
 
 /**
@@ -70,8 +74,10 @@ function getArgumentsCount(/* funcs */) {
  *   power05(16) => 4
  *
  */
-function getPowerFunction(/* exponent */) {
-  throw new Error('Not implemented');
+function getPowerFunction(exponent) {
+  return function showResult(num) {
+    return num ** exponent;
+  };
 }
 
 /**
@@ -189,8 +195,13 @@ function partialUsingArguments(/* fn, ...args1 */) {
  *   getId4() => 7
  *   getId10() => 11
  */
-function getIdGeneratorFunction(/* startFrom */) {
-  throw new Error('Not implemented');
+function getIdGeneratorFunction(startFrom) {
+  let count = -1;
+  function generateNumber() {
+    count += 1;
+    return startFrom + count;
+  }
+  return generateNumber;
 }
 
 module.exports = {
