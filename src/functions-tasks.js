@@ -32,8 +32,11 @@ function getCurrentFunctionName() {
  *   getFunctionBody(hiHello) => "function hiHello() { console.log('hello world'); }"
  *
  */
-function getFunctionBody(/* func */) {
-  throw new Error('Not implemented');
+function getFunctionBody(func) {
+  if (!func) {
+    return '';
+  }
+  return func.toString();
 }
 
 /**
@@ -93,8 +96,18 @@ function getPowerFunction(exponent) {
  *   getPolynom(8)     => y = 8
  *   getPolynom()      => null
  */
-function getPolynom() {
-  throw new Error('Not implemented');
+function getPolynom(...args) {
+  if (args.length === 0) {
+    return null;
+  }
+
+  return (x) => {
+    let polynom = 0;
+    for (let i = args.length - 1; i >= 0; i -= 1) {
+      polynom += args[i] * x ** (args.length - 1 - i);
+    }
+    return polynom;
+  };
 }
 
 /**
@@ -111,8 +124,15 @@ function getPolynom() {
  *   ...
  *   memoizer() => the same random number  (next run, returns the previous cached result)
  */
-function memoize(/* func */) {
-  throw new Error('Not implemented');
+function memoize(func) {
+  let prevValue;
+
+  return () => {
+    if (!prevValue) {
+      prevValue = func();
+    }
+    return prevValue;
+  };
 }
 
 /**
@@ -130,8 +150,20 @@ function memoize(/* func */) {
  * }, 2);
  * retryer() => 2
  */
-function retry(/* func, attempts */) {
-  throw new Error('Not implemented');
+function retry(func, attempts) {
+  return (...args) => {
+    let remaining = attempts;
+
+    while (remaining > 0) {
+      try {
+        return func(...args);
+      } catch (err) {
+        remaining -= 1;
+      }
+    }
+
+    throw new Error(`You don't have any attempts`);
+  };
 }
 
 /**
@@ -174,8 +206,8 @@ function logger(/* func, logFunc */) {
  *   partialUsingArguments(fn, 'a','b','c')('d') => 'abcd'
  *   partialUsingArguments(fn, 'a','b','c','d')() => 'abcd'
  */
-function partialUsingArguments(/* fn, ...args1 */) {
-  throw new Error('Not implemented');
+function partialUsingArguments(fn, ...args1) {
+  return (...args2) => fn(...args1, ...args2);
 }
 
 /**
